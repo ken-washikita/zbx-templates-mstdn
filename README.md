@@ -49,3 +49,22 @@ total 12
 
 最後に、Zabbixサーバで`Template_App_Redis.xml`をインポートし、さらに対象サーバに`Template App Redis`を適用します。
 これでRedisの各種パラメータが監視できるようになります。
+
+## Sidekiq Statusの監視
+Sidekiqは2つのテンプレート、StatusとProcessを使って監視します。まずStatusから説明します。
+StatusはSidekiqの処理状態と、キューの状態を表すパラメータを監視します。`Sidekiq::Stats`をコールして得られる値を整理しています。
+
+まずディレクトリ/etc/cron.dに`sidekiq-cron`を設置します。
+cronは1分おきに、/var/tmp/sidekiq-infoファイルを作成し、更新するようになります。
+
+次に/etc/zabbix/zabbix_agentd.dディレクトリに`userparameter_sidekiq.conf`を設置します。
+このファイルはZabbixエージェントが上記のファイルを読み込んでパラメータをZabbixサーバに返すためのスクリプトを定義します。
+
+最後にZabbixサーバで`Template_App_Sidekiq_Status.xml`をインポートし、対象サーバに`Template App Sidekiq Status`を適用します。
+
+もし大規模Mastodonを運用していて、Sidekiqサーバが複数に分かれている場合、Sidekiq Statusは1台のサーバだけを対象にインストールしてください。
+`Sidekiq::Stats`はすべてのSidekiqの状態を一括して返すので、1台のサーバに問い合わせるだけで十分間に合います。
+
+## Sidekiq Processの監視
+Sidekiq Processはシンプルな監視テンプレートで、sidekiqプロセスが存在しているか否かをチェックします。
+Zabbixサーバで`Template_AppSidekiq_Process.xml`をインポートし、対象サーバに`Template App Sidekiq Process`を適用します。
