@@ -1,0 +1,2 @@
+*/1 * * * * root /usr/bin/redis-cli info >/etc/zabbix/redis/redis-info
+*/1 * * * * root /etc/zabbix/redis/redis-latency.sh
