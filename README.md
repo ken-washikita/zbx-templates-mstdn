@@ -19,7 +19,6 @@ Redisを監視するために、情報ファイルの取得を行います。Red
     redis_git_sha1:00000000
     redis_git_dirty:0
     :
-    :
 
 これをcronで1分おきに起動し、結果をファイルに出力します。ファイルはZabbixが読めるようにする必要があります。
 ここでは、/etc/zabbix/redisディレクトリを作成し、redis-infoという名前で保存するようにします。
