@@ -26,15 +26,14 @@ Redisを監視するために、情報ファイルの取得を行います。Red
     # mkdir -p /etc/zabbix/redis
 
 cronは、/etc/cron.d/redis-cronというファイルに以下のように記述します。
-
-    # cron
-    */1 * * * * root /usr/bin/redis-cli info >/etc/zabbix/redis/redis-info
-
+```
+    */1 * * * * root /usr/bin/redis-cli info >/etc/zabbix/redis/redis-info
+```
 このファイルは、userparameter_redis.confが読み込み、Zabbixサーバに監視データとして値を送出する元となります。
 
 もうひとつ、redis-latencyというパラメータを取得します。redis-cliを利用して取得するバッチファイルredis-latency.shを用意しています。
 これを/etc/zabbix/redisに置き、cronで1分おきに起動して、結果をファイルredis-latencyに保存します。
-
+```
     */1 * * * * root /etc/zabbix/redis/redis-latency.sh
-
+```
 このファイルも、userparameter_redis.confが読み込み、Zabbixサーバに監視データとして値が送出されます。
